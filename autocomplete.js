@@ -14,6 +14,24 @@ inputBox.addEventListener('input', function() {
     display(results);
 });
 
+// Event listener for input box focus event (to show options)
+inputBox.addEventListener('focus', function() {
+    let input = inputBox.value.trim().toLowerCase(); // Get input value in lowercase
+    let results = availableKeywords.filter(keyword => keyword.toLowerCase().startsWith(input));
+    display(results);
+});
+
+// Event listener to hide results when clicking outside of input box or results box
+document.addEventListener('click', function(event) {
+    const isClickInsideInput = inputBox.contains(event.target);
+    const isClickInsideResults = resultsBox.contains(event.target);
+
+    if (!isClickInsideInput && !isClickInsideResults) {
+        resultsBox.style.display = 'none'; // Hide results
+        selectedResultIndex = -1; // Reset selected index
+    }
+});
+
 // Function to display results in the result box
 function display(results) {
     const content = results.map(result => `<li>${result}</li>`).join('');
